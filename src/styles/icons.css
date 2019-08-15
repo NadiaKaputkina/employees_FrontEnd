@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'fontello';
+    src: url('../fonts/font/fontello.eot?17959301');
+    src: url('../fonts/font/fontello.eot?17959301#iefix') format('embedded-opentype'),
+    url('../fonts/font/fontello.woff2?17959301') format('woff2'),
+    url('../fonts/font/fontello.woff?17959301') format('woff'),
+    url('../fonts/font/fontello.ttf?17959301') format('truetype'),
+    url('../fonts/font/fontello.svg?17959301#fontello') format('svg');
+
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "fontello";
+    font-size: 1.5rem;
+    color: inherit;
+}
+
+.icon-cancel-circled:before {
+    content: '\e800';
+    color: darkgray;
+    position: absolute;
+    top: -.8rem;
+    right: -.5rem;
+} /* '' */
+.icon-angle-double-left:before {
+    content: '\f100';
+} /* '' */
+.icon-angle-double-right:before {
+    content: '\f101';
+} /* '' */
