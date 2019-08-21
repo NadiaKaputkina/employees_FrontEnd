@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const TabBarNav = ({children, navLabel, className, onChangeActiveTab}) => {
+
+const TabBarNav = ({ children, navLabel, className, onChangeActiveTab }) => {
     const classes = classNames(
         'nav-item',
         className,
@@ -11,9 +12,9 @@ const TabBarNav = ({children, navLabel, className, onChangeActiveTab}) => {
     return (
         <button
             className={classes}
-            onClick={() => {onChangeActiveTab(navLabel)}}
+            onClick={ () => {onChangeActiveTab(navLabel)} }
         >
-            {children}
+            { children }
         </button>
     )
 };

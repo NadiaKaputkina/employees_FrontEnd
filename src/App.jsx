@@ -10,17 +10,15 @@ import Home from './containers/Home';
 import ErrorPage from './containers/ErrorPage';
 import APIService from "./services/APIService";
 
-class App extends Component {
-    componentDidMount() {
-        console.log('App - componentDidMount');
 
+class App extends Component {
+
+    componentDidMount() {
         APIService.fetchData(RouteURLs.employees);
         APIService.fetchData(RouteURLs.positions);
     }
 
     render() {
-        console.log('App - render');
-
         return (
             <>
                 <Navigation/>
@@ -28,13 +26,11 @@ class App extends Component {
                 <Switch>
                     <Route exact path={RouteURLs.home} component={Home}/>
 
-                    <Route exact path={RouteURLs.employees} component={PageComponent}/>
-                    <Route exact path={`${RouteURLs.employees}${RouteURLs.new}`} component={NewBox}/>
-                    <Route path={`${RouteURLs.employees}${RouteURLs.id}`} component={EditBox}/>
+                    <Route exact path={[RouteURLs.employees, RouteURLs.positions]} component={PageComponent}/>
 
-                    <Route exact path={RouteURLs.positions} component={PageComponent}/>
-                    <Route exact path={`${RouteURLs.positions}${RouteURLs.new}`} component={NewBox}/>
-                    <Route path={`${RouteURLs.positions}${RouteURLs.id}`} component={EditBox}/>
+                    <Route exact path={[`${RouteURLs.employees}${RouteURLs.new}`, `${RouteURLs.positions}${RouteURLs.new}`]} component={NewBox}/>
+
+                    <Route path={[`${RouteURLs.employees}${RouteURLs.id}`, `${RouteURLs.positions}${RouteURLs.id}`]} component={EditBox}/>
 
                     <Route path='*' component={ErrorPage}/>
                 </Switch>

@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from "react-router-redux";
 
-import { dataEmp, filterDataEmp, newEntryEmp, editEntryEmp } from './reducersEmp';
-import { dataPos, filterDataPos, newEntryPos, editEntryPos } from "./reducersPos";
+import { activePageEmp, dataEmp, filterDataEmp, newEntryEmp, editEntryEmp } from './reducersEmp';
+import { activePagePos, dataPos, filterDataPos, newEntryPos, editEntryPos } from "./reducersPos";
 
 const employeesReducers = combineReducers({
+    activePage: activePageEmp,
     data: dataEmp,
     filterData: filterDataEmp,
     newEntry: newEntryEmp,
@@ -12,6 +13,7 @@ const employeesReducers = combineReducers({
 });
 
 const positionsReducers = combineReducers({
+    activePage: activePagePos,
     data: dataPos,
     filterData: filterDataPos,
     newEntry: newEntryPos,
@@ -25,7 +27,7 @@ const activeTab = (state = null, action) => {
     return state;
 };
 
-const tableSize = (state = 15, action) => {
+const tableSize = (state = 10, action) => {
     if (action.type === 'TABLE_SIZE') {
         return action.size;
     }

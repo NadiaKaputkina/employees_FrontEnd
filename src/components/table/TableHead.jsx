@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TableHead = ({columnHeaders}) => {
-  //  console.log('TableHead - render', columnHeaders);
+
+const TableHead = ({ columnHeaders }) => {
 
     let headlines = [];
 

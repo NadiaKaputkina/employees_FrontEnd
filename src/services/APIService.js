@@ -5,6 +5,7 @@ import {
 
 import store from '../store';
 
+
 class APIService {
     static fetchData(url) {
         fetch(url, {
@@ -35,7 +36,6 @@ class APIService {
         })
             .then(res => res.json())
             .then(resData => {
-                console.log('New entry successfully added');
                 if (url === '/employees') {
                     store.dispatch(act_getDataFromDatabaseEmp(resData));
                 }
@@ -57,7 +57,6 @@ class APIService {
         })
             .then(res => res.json())
             .then(resData => {
-                console.log('New entry successfully added');
                 if (url === '/employees') {
                     store.dispatch(act_getDataFromDatabaseEmp(resData));
                 }
@@ -79,7 +78,6 @@ class APIService {
         })
             .then(res => res.json())
             .then(resData => {
-                console.log('Entry successfully deleted');
                 if (url === '/employees') {
                     store.dispatch(act_getDataFromDatabaseEmp(resData));
                 }

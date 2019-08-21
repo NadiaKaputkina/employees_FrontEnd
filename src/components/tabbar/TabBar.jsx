@@ -7,6 +7,7 @@ import TabBarNav from './TabBarNav';
 import store from "../../store";
 import {act_activeTab} from "../../actions/actionsCreator";
 
+
 class TabBar extends Component {
 
     componentDidMount() {
@@ -27,22 +28,22 @@ class TabBar extends Component {
     };
 
     render() {
-        const {children = [], activeTab} = this.props;
+        const { children = [], activeTab } = this.props;
 
         const renderTabs = this.getChildrenLabel(children).map((navLabel, i) => (
             <TabBarNav
                 key={navLabel}
                 navLabel={navLabel}
-                className={classNames({active: activeTab === navLabel})}
+                className={ classNames({active: activeTab === navLabel}) }
                 onChangeActiveTab={this.setActiveTab}
             >
-                {children[i]}
+                { children[i] }
             </TabBarNav>
         ));
 
         return (
             <nav className='tab-bar-nav'>
-                {renderTabs}
+                { renderTabs }
             </nav>
         )
     }

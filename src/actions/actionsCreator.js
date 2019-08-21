@@ -8,6 +8,11 @@ export const act_tableSize = (size) => ({
     size
 });
 
+export const act_activePageEmp = (page) => ({
+    type: 'ACTIVE_PAGE_EMP',
+    page
+});
+
 export const act_getDataFromDatabaseEmp = (data) => ({
     type: 'GET_DATA_EMP',
     data
@@ -42,6 +47,11 @@ export const act_editEntryEmp = (id, data) => ({
     type: 'EDIT_ENTRY_EMP',
     id,
     data
+});
+
+export const act_activePagePos = (page) => ({
+    type: 'ACTIVE_PAGE_POS',
+    page
 });
 
 export const act_getDataFromDatabasePos = (data) => ({

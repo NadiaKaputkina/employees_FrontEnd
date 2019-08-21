@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({id, children,type, className, onClick, ...attrs}) => {
+
+const Button = ({ id, children, type, className, onClick, ...attrs }) => {
+
     return (
         <button
             id={id}
@@ -10,7 +12,7 @@ const Button = ({id, children,type, className, onClick, ...attrs}) => {
             onClick={onClick}
             {...attrs}
         >
-            {children}
+            { children }
         </button>
     )
 };

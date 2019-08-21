@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import Input from '../input/Input';
 
-const ViewEntry = ({entry, handleChange, disabled, ...attrs}) => {
-    console.log('ViewEntry - render', entry);
+
+const ViewEntry = ({ entry, handleChange, disabled, ...attrs }) => {
+
     let inputs = [];
 
     for (let key in entry) {

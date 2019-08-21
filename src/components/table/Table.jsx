@@ -1,171 +1,91 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
 
 import TableRow from './TableRow';
 import TableHead from "./TableHead";
 import TableFoot from "./TableFoot";
-import TableSize from './TableSize';
+import Pagination from './Pagination';
+import {EMPLOYEES} from "../../constants/Constants";
 
 import store from "../../store";
-import {act_tableSize} from "../../actions/actionsCreator";
+import {act_activePageEmp, act_activePagePos} from "../../actions/actionsCreator";
 
-class Table extends Component {
-    state = {
-        activePage: 1,
-        from: 0,
-        to: this.props.tableSize - 1,
+
+const Table = ({ data, columnHeaders, activeTab, tableSize, activePage }) => {
+
+    const getNumberOfPages = () => (
+        Math.ceil(data.length / tableSize)
+    );
+
+    const getBorders = () => {
+        const dataLength = data.length;
+
+        let borders = {
+            from: (activePage - 1) * tableSize,
+            to: (activePage * tableSize > dataLength) ? (dataLength - 1) : (activePage * tableSize - 1)
+        };
+
+        if (borders.from > borders.to) {
+            (activeTab === EMPLOYEES) ?
+                store.dispatch(act_activePageEmp(1)) :
+                store.dispatch(act_activePagePos(1));
+        }
+
+        return borders;
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('componentDidUpdate', prevState, this.state);
+    const {from, to} = getBorders();
+    let rows = [];
 
-        const tableFoot = document.getElementsByClassName('table-foot')[0];
-        const li = tableFoot.getElementsByTagName('li');
-        const currentActivePage = this.state.activePage;
-
-        if (currentActivePage !== prevState.activePage) {
-            console.log(`currentActivePage !== prevState.activePage`);
-            li[prevState.activePage - 1].classList.remove('active-page');
-            li[currentActivePage - 1].classList.add('active-page');
-        }
+    for (let i = from; i <= to; i++) {
+        rows.push(
+            <TableRow key={i} i={i} item={data[i]} activeTab={activeTab} />
+        );
     }
 
-    changeTableSize = (e) => {
-        console.log('changeTableSize');
-        const dataLength = this.props.data.length;
-        const tableSize = +e.target.value;
+    if (!rows.length) rows = <tr><td>Nothing found.</td></tr>;
 
-        store.dispatch(act_tableSize(tableSize));
+    return (
+        <table className='table'>
 
-        this.setState({
-            activePage: 1,
-            from: 0,
-            to: (dataLength < tableSize) ? (dataLength - 1) : (tableSize - 1)
-        });
-    };
+            <thead className='table-head'>
+            <TableHead columnHeaders={columnHeaders}/>
+            </thead>
 
+            <tbody className='table-body'>
+            { rows }
+            </tbody>
 
-    numberOfPages = () => {
-        const dataLength = this.props.data.length;
-        const {tableSize} = this.props;
+            <tfoot className='table-foot'>
+            <TableFoot numberOfPages={getNumberOfPages()}
+                       activePage={activePage}
+                       activeTab={activeTab}>
 
-        return Math.ceil(dataLength / tableSize);
-    };
+                <Pagination tableSize={tableSize}
+                            numberOfPages={getNumberOfPages()}
+                            activePage={activePage}
+                            activeTab={activeTab}/>
+            </TableFoot>
+            </tfoot>
 
-
-    changeActivePage = (e) => {
-        console.log('changeActivePage');
-
-        const pageNumber = +e.target.innerHTML;
-
-        this.setState({
-            activePage: pageNumber
-        });
-
-        this.getBorders(pageNumber);
-    };
-
-
-    getBorders = (pageNumber) => {
-        console.log('getBorders');
-
-        const dataLength = this.props.data.length;
-        const {tableSize} = this.props;
-
-       this.setState( {
-            from: (pageNumber - 1) * tableSize,
-            to: (pageNumber * tableSize > dataLength) ? (dataLength - 1) : (pageNumber * tableSize - 1)
-        })
-    };
-
-
-    previousPage = (e) => {
-        console.log('left', this.state.activePage);
-        const {activePage} = this.state;
-        const currentPage = activePage;
-
-        if (activePage > 1) {
-            this.setState({
-                activePage: currentPage - 1
-            });
-
-            this.getBorders(currentPage - 1);
-        }
-    };
-
-    nextPage = (e) => {
-        console.log('right', this.state.activePage);
-        const {activePage} = this.state;
-        const currentPage = activePage;
-        const numberOfPages = this.numberOfPages();
-
-        if (activePage < numberOfPages) {
-            this.setState({
-                activePage: currentPage + 1
-            });
-
-            this.getBorders(currentPage + 1);
-        }
-    };
-
-    render() {
-        console.log('Table - render', this.props, this.state);
-
-        const {data, columnHeaders, activeTab, tableSize} = this.props;
-        const {from, to} = this.state;
-
-        const rows = [];
-        for (let i = from; i <= to; i++) {
-            rows.push(
-                <TableRow key={i} i={i} item={data[i]} activeTab={activeTab} />
-            );
-        }
-
-        return (
-            <table className='table'>
-
-                <thead className='table-head'>
-                    <TableHead columnHeaders={columnHeaders}/>
-                </thead>
-
-                <tbody className='table-body'>
-                    { rows }
-                </tbody>
-
-                <tfoot className='table-foot'>
-                    <TableFoot previousPage={this.previousPage} nextPage={this.nextPage}>
-
-                        <TableSize tableSize={tableSize}
-                                   changeTableSize={this.changeTableSize}
-                                   numberOfPages={this.numberOfPages()}
-                                   changeActivePage={this.changeActivePage}/>
-                        </TableFoot>
-                </tfoot>
-
-            </table>
-        )
-    }
-}
-
-const mapStateToProps = (state) => {
-    console.log('---mapStateToProps---');
-    return {
-        tableSize: state.tableSize
-    }
+        </table>
+    )
 };
-
 
 Table.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object),
     columnHeaders: PropTypes.object,
     activeTab: PropTypes.string,
+    tableSize: PropTypes.number,
+    activePage: PropTypes.number,
 };
 
 Table.defaultProps = {
     data: [],
     columnHeaders: {},
     activeTab: '',
+    tableSize: 10,
+    activePage: 1
 };
 
-export default connect(mapStateToProps)(Table);
+export default Table;

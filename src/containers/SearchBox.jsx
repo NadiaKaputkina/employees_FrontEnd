@@ -11,30 +11,31 @@ import { act_resetFilterDataEmp,
     act_filterDataEmp,
     act_filterDataPos } from "../actions/actionsCreator";
 
+
 class SearchBox extends Component {
 
     handleChange = (e) => {
-        const {activeTab} = this.props;
+        const { activeTab } = this.props;
 
         if (activeTab === EMPLOYEES) {
-            store.dispatch(act_filterDataEmp(e.target.id, e.target.value));
+            store.dispatch( act_filterDataEmp(e.target.id, e.target.value) );
         } else {
-            store.dispatch(act_filterDataPos(e.target.id, e.target.value));
+            store.dispatch( act_filterDataPos(e.target.id, e.target.value) );
         }
     };
 
     btnReset = () => {
-        const {activeTab} = this.props;
+        const { activeTab } = this.props;
 
         if (activeTab === EMPLOYEES) {
-            store.dispatch(act_resetFilterDataEmp());
+            store.dispatch( act_resetFilterDataEmp() );
         } else {
-            store.dispatch(act_resetFilterDataPos());
+            store.dispatch( act_resetFilterDataPos() );
         }
     };
 
     render() {
-        const {filterData} = this.props;
+        const { filterData } = this.props;
 
         return (
             <form className='search-box'>

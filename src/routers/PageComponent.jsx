@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
@@ -8,32 +8,25 @@ import FilteredList from '../containers/FilteredList';
 import RouteURLs from "../constants/RouteURLs";
 import Button from '../components/button/Button';
 
-class PageComponent extends Component {
 
-    render() {
-        console.log('PageComponent - render', this.props);
+const PageComponent = ({ fetchData, filterData, activeTab, showEntry }) => {
 
-        const {fetchData, filterData, activeTab, showEntry} = this.props;
-        return (
-            <div className='tab-container'>
-                <SearchBox
-                    filterData={filterData}
-                    activeTab={activeTab}
-                />
+    return (
+        <div className='tab-container'>
+            <SearchBox
+                filterData={filterData}
+                activeTab={activeTab}/>
 
-                <Button className='btn-new'><NavLink to={`/${activeTab}${RouteURLs.new}`}>New</NavLink></Button>
+            <Button className='btn-new'><NavLink to={`/${activeTab}${RouteURLs.new}`}>New</NavLink></Button>
 
-                <FilteredList
-                    showEntry={showEntry}
-                    fetchData={fetchData}
-                    filterData={filterData}
-                    activeTab={activeTab}
-                />
-            </div>
-        );
-  }
-}
-
+            <FilteredList
+                showEntry={showEntry}
+                fetchData={fetchData}
+                filterData={filterData}
+                activeTab={activeTab}/>
+        </div>
+    )
+};
 
 const mapStateToProps = (state) => {
     switch (window.location.pathname.indexOf(RouteURLs.employees) ) {

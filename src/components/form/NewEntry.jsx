@@ -17,6 +17,7 @@ import {
 import RouteURLs from "../../constants/RouteURLs";
 import {connect} from "react-redux";
 
+
 class NewEntry extends Component {
     state = {
         isChanged: false
@@ -81,6 +82,7 @@ class NewEntry extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log('---mapStateToProps---NewEntry---');
     switch (window.location.pathname.indexOf(RouteURLs.employees) ) {
         case 0:
             return {

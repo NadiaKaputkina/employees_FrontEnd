@@ -15,6 +15,7 @@ import {
     act_editEntryPos
 } from "../../actions/actionsCreator";
 
+
 class EditEntry extends Component {
     state = {
         isDisabled: true
@@ -59,13 +60,13 @@ class EditEntry extends Component {
     };
 
     cancel = () => {
-       /* const {activeTab} = this.props;
-
-        if (activeTab === EMPLOYEES) {
-            store.dispatch(act_resetNewEntryEmp());
-        } else {
-            store.dispatch(act_resetNewEntryPos());
-        }*/
+        /* const {activeTab} = this.props;
+ 
+         if (activeTab === EMPLOYEES) {
+             store.dispatch(act_resetNewEntryEmp());
+         } else {
+             store.dispatch(act_resetNewEntryPos());
+         }*/
     };
 
     render() {
@@ -97,6 +98,7 @@ class EditEntry extends Component {
 };
 
 const mapStateToProps = (state) => {
+    console.log('---mapStateToProps---EditEntry---');
     switch (window.location.pathname.indexOf(RouteURLs.employees) ) {
         case 0:
             return {
@@ -112,6 +114,5 @@ const mapStateToProps = (state) => {
             return state;
     }
 };
-
 
 export default connect(mapStateToProps)(EditEntry);

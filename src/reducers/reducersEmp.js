@@ -56,3 +56,11 @@ export const editEntryEmp = (state = initialState, action) => {
     }
     return state;
 };
+
+export const activePageEmp = (state = 1, action) => {
+    if (action.type === 'ACTIVE_PAGE_EMP') {
+        return action.page
+    }
+
+    return state;
+};

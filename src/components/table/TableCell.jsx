@@ -2,7 +2,9 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 
-const TableCell = ({i, children, activeTab}) => {
+
+const TableCell = ({ i, children, activeTab }) => {
+
     return (
         <td>
             <NavLink to={`/${activeTab}/${i+1}`} >

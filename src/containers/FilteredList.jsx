@@ -1,49 +1,68 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from "react-redux";
 
 import Table from '../components/table/Table';
 import {employeesTableModel, positionsTableModel} from '../constants/ModelOfTables';
 import {EMPLOYEES} from "../constants/Constants";
+import RouteURLs from "../constants/RouteURLs";
 
-class FilteredList extends Component {
-    render() {
-        console.log('FilteredList - render', this.props);
 
-        const {showEntry, fetchData, filterData, activeTab} = this.props;
+const FilteredList = ({ showEntry, fetchData, filterData, activeTab, tableSize, activePage }) => {
 
-        let filteredItems = fetchData.filter(
-            (item) => {
-                for (let key in item) {
-                    if (key === 'id') continue;
+    const getTableModel = () => (
+        (activeTab === EMPLOYEES) ? employeesTableModel : positionsTableModel
+    );
 
-                    if ( item[key].indexOf(filterData[key]) === -1 ) return false;
-                }
-                return true;
+    let filteredItems = fetchData.filter(
+        (item) => {
+            for (let key in item) {
+                if (key === 'id') continue;
+
+                if ( item[key].indexOf(filterData[key]) === -1 ) return false;
             }
-        );
+            return true;
+        }
+    );
 
-        const tableModel = () => (
-            (this.props.activeTab === EMPLOYEES) ? employeesTableModel : positionsTableModel
-        );
+    return (
+        <div className='view-box'>
+            <Table
+                data={filteredItems}
+                columnHeaders={ getTableModel() }
+                activeTab={activeTab}
+                tableSize={tableSize}
+                activePage={activePage}
+            />
+            { showEntry }
+        </div>
+    )
+};
 
-        return (
-            <div className='view-box'>
-                <Table
-                    data={filteredItems}
-                    columnHeaders={tableModel()}
-                    activeTab={activeTab}
-                />
-                { showEntry }
-            </div>
-        )
+const mapStateToProps = (state) => {
+    switch (window.location.pathname.indexOf(RouteURLs.employees) ) {
+        case 0:
+            return {
+                tableSize: state.tableSize,
+                activePage: state.employeesData.activePage
+            };
+        case -1:
+            return {
+                tableSize: state.tableSize,
+                activePage: state.positionsData.activePage,
+            };
+        default:
+            return state;
     }
-}
+};
 
 FilteredList.propTypes = {
     showEntry: PropTypes.object,
     fetchData: PropTypes.arrayOf(PropTypes.object),
     filterData: PropTypes.objectOf(PropTypes.string),
     activeTab: PropTypes.string,
+    tableSize: PropTypes.number,
+    activePage: PropTypes.number,
 };
 
 FilteredList.defaultProps = {
@@ -51,6 +70,8 @@ FilteredList.defaultProps = {
     fetchData: [],
     filterData: {},
     activeTab: '',
+    tableSize: 10,
+    activePage: 1
 };
 
-export default FilteredList;
+export default connect(mapStateToProps)(FilteredList);

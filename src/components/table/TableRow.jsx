@@ -10,14 +10,14 @@ import {act_entryForEditingEmp, act_entryForEditingPos} from "../../actions/acti
 
 //const TableRow = ({i, item, activeTab}) => {
 class TableRow extends Component {
- /*   componentDidMount() {
-        console.log('TableRow - componentDidMount');
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('TableRow - componentDidUpdate');
-    }
-*/
+    /*   componentDidMount() {
+           console.log('TableRow - componentDidMount');
+       }
+   
+       componentDidUpdate(prevProps, prevState, snapshot) {
+           console.log('TableRow - componentDidUpdate');
+       }
+   */
 
     viewEntry = (e) => {
         const {item, activeTab} = this.props;
@@ -39,7 +39,7 @@ class TableRow extends Component {
     };
 
     render() {
-        console.log('TableRow - render');
+        //   console.log('TableRow - render');
 
         const {i, item, activeTab} = this.props;
         let row = [];

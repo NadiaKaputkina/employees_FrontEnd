@@ -55,3 +55,11 @@ export const editEntryPos = (state = initialState, action) => {
     }
     return state;
 };
+
+export const activePagePos = (state = 1, action) => {
+    if (action.type === 'ACTIVE_PAGE_POS') {
+        return action.page
+    }
+
+    return state;
+};
